@@ -1,8 +1,8 @@
-'''
-	Either configure here or use command line arguments
-	-U/--username for username eg. -U 'softvar' or --username 'softvar'
-	_p/--password for password eg. -P 'secret_password' or --password 'secret_password'
-'''
+"""
+    Either configure here or use command line arguments
+    -U/--username for username eg. -U 'softvar' or --username 'softvar'
+    p/--password for password eg. -P 'secret_password' or --password 'secret_password'
+"""
 # Your Github username
 USERNAME = ''
 
