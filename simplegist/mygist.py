@@ -4,7 +4,7 @@ from .config import BASE_URL, GIST_URL
 from .errors import SimpleGistError
 
 
-class Mygist:
+class Mygist(object):
     def __init__(self, gist, **args):
         self.gist = gist
         if 'user' in args:

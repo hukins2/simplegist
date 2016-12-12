@@ -8,7 +8,7 @@ from .do import Do
 from .comments import Comments
 
 
-class Simplegist:
+class Simplegist(object):
     """
     Gist Base Class
 

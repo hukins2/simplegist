@@ -4,7 +4,7 @@ from .config import BASE_URL
 from .errors import SimpleGistError
 
 
-class Comments:
+class Comments(object):
     def __init__(self, gist):
         self.gist = gist
 
