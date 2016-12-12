@@ -1,11 +1,11 @@
 import requests
 import json
 
-from config import USERNAME, API_TOKEN, BASE_URL, GIST_URL
+from .config import USERNAME, API_TOKEN, BASE_URL, GIST_URL
 
-from mygist import Mygist
-from do import Do
-from comments import Comments
+from .mygist import Mygist
+from .do import Do
+from .comments import Comments
 
 
 class Simplegist:

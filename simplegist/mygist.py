@@ -1,6 +1,6 @@
 import json
 import requests
-from config import BASE_URL, GIST_URL
+from .config import BASE_URL, GIST_URL
 
 
 class Mygist:
@@ -27,8 +27,8 @@ class Mygist:
         r_text = json.loads(r.text)
         limit = len(r.json())
         if r.status_code == 200:
-            for g, no in zip(r_text, range(0, limit)):
-                for key, value in r.json()[no]['files'].iteritems():
+            for g, no in zip(r_text, list(range(0, limit))):
+                for key, value in r.json()[no]['files'].items():
                     file_name.append(value['filename'])
             return file_name
 
@@ -51,8 +51,8 @@ class Mygist:
             r_text = json.loads(r.text)
             limit = offset if (offset <= len(r.json())) else len(r.json())
 
-            for g, no in zip(r_text, range(0, limit)):
-                for key, value in r.json()[no]['files'].iteritems():
+            for g, no in zip(r_text, list(range(0, limit))):
+                for key, value in r.json()[no]['files'].items():
                     file_name.append(value['filename'])
             return file_name
         raise Exception('Username not found')
@@ -70,8 +70,8 @@ class Mygist:
             r_text = json.loads(r.text)
             limit = len(r.json())
 
-            for g, no in zip(r_text, range(0, limit)):
-                for ka, va in r.json()[no]['files'].iteritems():
+            for g, no in zip(r_text, list(range(0, limit))):
+                for ka, va in r.json()[no]['files'].items():
                     if str(va['filename']) == str(gist_name):
                         return r.json()[no]['id']
         return 0
@@ -102,7 +102,7 @@ class Mygist:
                 if self.gist_name != '':
                     content = r.json()['files'][self.gist_name]['content']
                 else:
-                    for key, value in r.json()['files'].iteritems():
+                    for key, value in r.json()['files'].items():
                         content = r.json()['files'][value['filename']]['content']
                 return content
 
@@ -122,7 +122,7 @@ class Mygist:
             )
             if r.status_code == 200:
 
-                for key, value in r.json()['files'].iteritems():
+                for key, value in r.json()['files'].items():
                     content = value['filename']
                 return content
 

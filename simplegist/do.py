@@ -1,6 +1,6 @@
 import json
 import requests
-from config import BASE_URL, GIST_URL
+from .config import BASE_URL
 
 
 class Do:
@@ -20,8 +20,8 @@ class Do:
             r_text = json.loads(r.text)
             limit = len(r.json())
 
-            for g, no in zip(r_text, range(0, limit)):
-                for ka, va in r.json()[no]['files'].iteritems():
+            for g, no in zip(r_text, list(range(0, limit))):
+                for ka, va in r.json()[no]['files'].items():
                     if str(va['filename']) == str(gist_name):
                         return r.json()[no]['id']
         return 0

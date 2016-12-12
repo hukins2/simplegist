@@ -5,7 +5,7 @@ without manually looking for it on GitHub
 (c) 2013 Varun Malhotra. MIT License
 """
 
-from simplegist import *
+from .simplegist import *
 
 __author__ = 'Varun Malhotra'
 __version__ = '1.0.1'
