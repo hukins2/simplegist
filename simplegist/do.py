@@ -1,6 +1,7 @@
 import json
 import requests
 from .config import BASE_URL
+from .errors import SimpleGistError
 
 
 class Do:
@@ -36,7 +37,7 @@ class Do:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception(
+            raise SimpleGistError(
                 'Either provide authenticated user\'s Unambigious Gistname or any unique Gistid to be starred')
 
         r = requests.put(
@@ -49,7 +50,7 @@ class Do:
             }
             return response
 
-        raise Exception('Gist can\'t be starred')
+        raise SimpleGistError('Gist can\'t be starred')
 
     def unstar(self, **args):
         """
@@ -61,7 +62,7 @@ class Do:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception(
+            raise SimpleGistError(
                 'Either provide authenticated user\'s Unambigious Gistname or any unique Gistid to be unstarred')
 
         r = requests.delete(
@@ -74,7 +75,7 @@ class Do:
             }
             return response
 
-        raise Exception('Gist can\'t be unstarred')
+        raise SimpleGistError('Gist can\'t be unstarred')
 
     def fork(self, **args):
         """
@@ -86,7 +87,7 @@ class Do:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception(
+            raise SimpleGistError(
                 'Either provide authenticated user\'s Unambigious Gistname or any unique Gistid to be forked')
 
         r = requests.post(
@@ -102,7 +103,7 @@ class Do:
             }
             return response
 
-        raise Exception('Gist can\'t be forked')
+        raise SimpleGistError('Gist can\'t be forked')
 
     def checkifstar(self, **args):
         """
@@ -115,7 +116,7 @@ class Do:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception(
+            raise SimpleGistError(
                 'Either provide authenticated user\'s Unambigious Gistname or any unique Gistid to be checked for star')
 
         r = requests.get(

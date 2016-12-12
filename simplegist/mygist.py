@@ -1,6 +1,7 @@
 import json
 import requests
 from .config import BASE_URL, GIST_URL
+from .errors import SimpleGistError
 
 
 class Mygist:
@@ -32,7 +33,7 @@ class Mygist:
                     file_name.append(value['filename'])
             return file_name
 
-        raise Exception('Username not found')
+        raise SimpleGistError('Username not found')
 
     def list(self, offset):
         """
@@ -55,7 +56,7 @@ class Mygist:
                 for key, value in r.json()[no]['files'].items():
                     file_name.append(value['filename'])
             return file_name
-        raise Exception('Username not found')
+        raise SimpleGistError('Username not found')
 
     def getMyID(self, gist_name):
         """
@@ -90,7 +91,7 @@ class Mygist:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
+            raise SimpleGistError('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
 
         if self.gist_id:
             r = requests.get(
@@ -106,14 +107,14 @@ class Mygist:
                         content = r.json()['files'][value['filename']]['content']
                 return content
 
-        raise Exception('No such gist found')
+        raise SimpleGistError('No such gist found')
 
     def getgist(self, **args):
 
         if 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Gist ID must be provided')
+            raise SimpleGistError('Gist ID must be provided')
 
         if self.gist_id:
             r = requests.get(
@@ -126,7 +127,7 @@ class Mygist:
                     content = value['filename']
                 return content
 
-        raise Exception('No such gist found')
+        raise SimpleGistError('No such gist found')
 
     def edit(self, **args):
         """
@@ -148,12 +149,12 @@ class Mygist:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Gist Name/ID must be provided')
+            raise SimpleGistError('Gist Name/ID must be provided')
 
         if 'content' in args:
             self.content = args['content']
         else:
-            raise Exception('Gist content can\'t be empty')
+            raise SimpleGistError('Gist content can\'t be empty')
 
         if self.gist_name == '':
             self.gist_name = self.getgist(id=self.gist_id)
@@ -189,7 +190,7 @@ class Mygist:
 
                 return response
 
-        raise Exception('No such gist found')
+        raise SimpleGistError('No such gist found')
 
     def delete(self, **args):
         """
@@ -202,7 +203,7 @@ class Mygist:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Provide GistName to delete')
+            raise SimpleGistError('Provide GistName to delete')
 
         url = 'gists'
         if self.gist_id:
@@ -216,7 +217,7 @@ class Mygist:
                 }
                 return response
 
-        raise Exception('Can not delete gist')
+        raise SimpleGistError('Can not delete gist')
 
     def starred(self, **args):
         """
@@ -238,7 +239,7 @@ class Mygist:
                 ids.append('%s/%s/%s' % (GIST_URL, r.json()[g]['user']['login'], r.json()[g]['id']))
             return ids
 
-        raise Exception('Username not found')
+        raise SimpleGistError('Username not found')
 
     def links(self, **args):
         """
@@ -250,7 +251,7 @@ class Mygist:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Gist Name/ID must be provided')
+            raise SimpleGistError('Gist Name/ID must be provided')
         if self.gist_id:
             r = requests.get(
                 '%s/gists/%s' % (BASE_URL, self.gist_id),
@@ -267,4 +268,4 @@ class Mygist:
                 }
                 return content
 
-        raise Exception('No such gist found')
+        raise SimpleGistError('No such gist found')

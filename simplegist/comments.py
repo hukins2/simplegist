@@ -1,6 +1,7 @@
 import json
 import requests
 from .config import BASE_URL
+from .errors import SimpleGistError
 
 
 class Comments:
@@ -26,7 +27,7 @@ class Comments:
                         return r.json()[no]['id']
             return 0
 
-        raise Exception('Username not found')
+        raise SimpleGistError('Username not found')
 
     def listall(self, **args):
         if 'user' in args:
@@ -42,7 +43,7 @@ class Comments:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
+            raise SimpleGistError('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
 
         if self.gist_id:
             allcomments = []
@@ -58,13 +59,13 @@ class Comments:
 
                 return allcomments
 
-        raise Exception('Gistname not found')
+        raise SimpleGistError('Gistname not found')
 
     def create(self, **args):
         if 'body' in args:
             self.body = {'body': args['body']}
         else:
-            raise Exception('Comment Body can\'t be empty')
+            raise SimpleGistError('Comment Body can\'t be empty')
         if 'user' in args:
             self.user = args['user']
 
@@ -78,7 +79,7 @@ class Comments:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
+            raise SimpleGistError('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
 
         if self.gist_id:
 
@@ -96,7 +97,7 @@ class Comments:
                 }
                 return response
 
-        raise Exception('Comment not created')
+        raise SimpleGistError('Comment not created')
 
     def delete(self, **args):
 
@@ -109,12 +110,12 @@ class Comments:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
+            raise SimpleGistError('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
 
         if 'commentid' in args:
             self.commentid = args['commentid']
         else:
-            raise Exception('CommenID not provided')
+            raise SimpleGistError('CommenID not provided')
 
         if self.gist_id:
             r = requests.delete(
@@ -134,7 +135,7 @@ class Comments:
                 }
                 return response
 
-        raise Exception('Gist/Comment not exits')
+        raise SimpleGistError('Gist/Comment not exits')
 
     def get(self, **args):
 
@@ -147,12 +148,12 @@ class Comments:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
+            raise SimpleGistError('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
 
         if 'commentid' in args:
             self.commentid = args['commentid']
         else:
-            raise Exception('CommenID not provided')
+            raise SimpleGistError('CommenID not provided')
 
         if self.gist_id:
             r = requests.get(
@@ -173,13 +174,13 @@ class Comments:
                 }
                 return response
 
-        raise Exception('Comment not exits/deleted')
+        raise SimpleGistError('Comment not exits/deleted')
 
     def edit(self, **args):
         if 'body' in args:
             self.body = {'body': args['body']}
         else:
-            raise Exception('Comment Body can\'t be empty')
+            raise SimpleGistError('Comment Body can\'t be empty')
         if 'user' in args:
             self.user = args['user']
 
@@ -189,7 +190,7 @@ class Comments:
         if 'commentid' in args:
             self.commentid = args['commentid']
         else:
-            raise Exception('CommenID not provided')
+            raise SimpleGistError('CommenID not provided')
 
         self.gist_name = ''
         if 'name' in args:
@@ -198,7 +199,7 @@ class Comments:
         elif 'id' in args:
             self.gist_id = args['id']
         else:
-            raise Exception('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
+            raise SimpleGistError('Either provide authenticated user\'s Unambigious Gistname or any unique Gistid')
 
         if self.gist_id:
 
@@ -220,4 +221,4 @@ class Comments:
                     'comment': 'not edited'
                 }
 
-        raise Exception('Comment not edited')
+        raise SimpleGistError('Comment not edited')
