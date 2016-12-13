@@ -259,7 +259,7 @@ class Mygist(object):
             )
             if r.status_code == 200:
                 content = {
-                    'Github-User': r.json()['user']['login'],
+                    'Github-User': r.json()['owner']['login'],
                     'GistID': r.json()['id'],
                     'Gist-Link': '%s/%s/%s' % (GIST_URL, self.gist.username, r.json()['id']),
                     'Clone-Link': '%s/%s.git' % (GIST_URL, r.json()['id']),
